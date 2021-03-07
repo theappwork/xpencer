@@ -1,0 +1,39 @@
+{
+  "name": "xpencer",
+  "version": "0.0.1",
+  "description": "Personal expenses tracker",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Daniel Alvarez Vera @tsuginodan <akaisuicchi@gmail.com>",
+  "license": "ISC",
+  "scripts": {
+    "clean": "rm -rdf dist/bundle.js",
+    "start": "snowpack dev",
+    "build": "snowpack build",
+    "netlify": "npm run build && npm start"
+  },
+  "dependencies": {
+    "dayjs": "^1.10.4",
+    "svelte": "^3.35.0",
+    "svelte-loader": "^3.0.0"
+  },
+  "devDependencies": {
+    "@snowpack/plugin-build-script": "^2.1.0",
+    "@snowpack/plugin-dotenv": "^2.0.5",
+    "@snowpack/plugin-svelte": "^3.5.2",
+    "@snowpack/plugin-typescript": "^1.2.1",
+    "@types/gapi": "0.0.39",
+    "@types/gapi.auth2": "0.0.53",
+    "@types/gapi.client.drive": "^3.0.13",
+    "@types/gapi.client.sheets": "^4.0.20201029",
+    "autoprefixer": "^10.2.5",
+    "cssnano": "^4.1.10",
+    "netlify-cli": "^3.10.6",
+    "postcss": "^8.2.7",
+    "postcss-cli": "^8.3.1",
+    "snowpack": "^3.0.13",
+    "svelte-preprocess": "^4.6.9",
+    "tailwindcss": "^2.0.3",
+    "typescript": "^4.2.3"
+  }
+}

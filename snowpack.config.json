@@ -1,0 +1,18 @@
+{
+  "mount": {
+    "src": "/"
+  },
+  "plugins": [
+    "@snowpack/plugin-typescript",
+    "@snowpack/plugin-svelte",
+    "@snowpack/plugin-dotenv",
+    [
+      "@snowpack/plugin-build-script",
+      {
+        "cmd": "postcss",
+        "input": [ ".css" ],
+        "output": [ ".css" ]
+      }
+    ]
+  ]
+}
