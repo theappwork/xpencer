@@ -1,11 +1,11 @@
 import { writable } from 'svelte/store';
 
 const buildStore = () => {
-  const { subscribe, set } = writable(null as gapi.auth2.BasicProfile | null);
+  const { subscribe, set } = writable(undefined as gapi.auth2.BasicProfile | undefined);
 
   return {
     subscribe,
-    setCurrentUser: (user: gapi.auth2.BasicProfile | null) => set(user),
+    setCurrentUser: (user: gapi.auth2.BasicProfile | undefined) => set(user),
   };
 };
 

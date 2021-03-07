@@ -25,7 +25,7 @@ export const getSpreadsheetSheet = async (
   spreadsheetId: string,
   sheetName: string = 'Sheet1',
   sheetRange = 'A1:A',
-): Promise<any[][] | null> => {
+): Promise<any[][] | undefined> => {
   try {
     const response = await gapi.client.sheets.spreadsheets.values.get({
       spreadsheetId,
@@ -41,7 +41,7 @@ export const getSpreadsheetSheet = async (
     return range.values;
   } catch (e) {
     showGoogleException(e);
-    return null;
+    return undefined;
   }
 };
 
@@ -50,7 +50,7 @@ export const createSpreadsheetSheet = async (
   sheetName: string,
   rows: number = 5000,
   columns: number = 25,
-): Promise<any[][] | null> => {
+): Promise<any[][] | undefined> => {
   try {
     await gapi.client.sheets.spreadsheets.batchUpdate(
       { spreadsheetId },
@@ -75,7 +75,7 @@ export const createSpreadsheetSheet = async (
     return [ [] ];
   } catch (e) {
     showGoogleException(e);
-    return null;
+    return undefined;
   }
 };
 

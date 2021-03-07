@@ -1,6 +1,6 @@
 <script>
   import Header from '../Header.svelte'
-  import { account, sheet, spreadsheet } from '../../stores/data'
+  import { options, sheet, spreadsheet } from '../../stores/data'
 
   const onAccountChange = (event) => {
     const select = event.target;
@@ -19,13 +19,13 @@
   <button disabled class="text-sm p-1 font-semibold uppercase">Add new</button>
 </div>
 
-{#if !$account.length}
+{#if !$options.accounts || !$options.accounts.length}
   <p>No accounts!</p>
 {:else}
   <label class="flex-col">
     <!-- svelte-ignore a11y-no-onchange-->
     <select name="account" on:change|preventDefault="{onAccountChange}">
-      {#each $account as account}
+      {#each $options.accounts as account}
         <option value="{account.toUpperCase()}">{account.toUpperCase()}</option>
       {/each}
     </select>

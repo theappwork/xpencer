@@ -1,10 +1,20 @@
 import { writable, derived } from 'svelte/store';
+import { Options } from '../model';
 import { Input, Sheet, Spreadsheet } from '../model/spreadsheet';
 
-export const account = writable([] as string[]);
-export const currency = writable([] as string[]);
-export const category = writable([] as string[]);
-export const kind = writable([] as string[]);
+const buildOptionsStore = () => {
+  const { subscribe, set } = writable({} as Options);
+
+  const methods = {
+    clear: () => set({}),
+  };
+
+  return {
+    subscribe,
+    set,
+    ...methods,
+  };
+};
 
 const buildSpreadsheetStore = () => {
   const { subscribe, set, update } = writable({} as Spreadsheet);
@@ -55,5 +65,6 @@ const buildSheetStore = () => {
   };
 };
 
+export const options = buildOptionsStore();
 export const spreadsheet = buildSpreadsheetStore();
 export const sheet = buildSheetStore();

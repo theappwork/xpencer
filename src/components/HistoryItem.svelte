@@ -5,7 +5,7 @@
 
   export let item: Input;
 
-  let isIncome: boolean | null = null;
+  let isIncome: boolean | undefined = undefined;
   let isOpen = false;
   let details: HTMLDetailsElement;
 
@@ -14,7 +14,7 @@
   }
 
   onMount(() => {
-    isIncome = !item.amount || item.amount === 0 ? null : +item.amount >= 0;
+    isIncome = !item.amount || item.amount === 0 ? undefined : +item.amount >= 0;
     details.addEventListener('toggle', onToggle);
   })
   onDestroy(() => {
@@ -22,7 +22,7 @@
   })
 </script>
 
-<details bind:this={details} class="{isIncome === null ? 'border-gray-400' : isIncome ? 'border-green-400' : 'border-red-400'} cursor-pointer border-l-4 bg-gray-50 flex flex-col pl-2 py-2 mb-1 shadow rounded-sm">
+<details bind:this={details} class="{isIncome === undefined ? 'border-gray-400' : isIncome ? 'border-green-400' : 'border-red-400'} cursor-pointer border-l-4 bg-gray-50 flex flex-col pl-2 py-2 mb-1 shadow rounded-sm">
   <summary class="list-none flex justify-between items-center">
     <div class="flex justify-between items-center w-full">
       <div class="flex flex-col">

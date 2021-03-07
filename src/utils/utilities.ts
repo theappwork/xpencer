@@ -18,13 +18,13 @@ export const fromSheetsToTransaction = (sheet: any[][]) => {
   return data;
 };
 
-export const list1DArray = async (spreadsheetId: string, sheetName: string, range: string): Promise<string[] | null> => {
+export const list1DArray = async (spreadsheetId: string, sheetName: string, range: string): Promise<string[] | undefined> => {
   try {
     const sheet = await getSpreadsheetSheet(spreadsheetId, sheetName, range);
     return fromSheetTo1DArray(sheet!);
   } catch (e) {
     showGoogleException(e);
-    return null;
+    return undefined;
   }
 };
 

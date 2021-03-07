@@ -5,17 +5,15 @@
   import SectionHistory from './components/sections/SectionHistory.svelte';
   import SectionAdd from './components/sections/SectionAdd.svelte';
   import { auth } from './stores/auth';
-  import { sheet, spreadsheet } from './stores/data';
+  import { options, sheet, spreadsheet } from './stores/data';
   import { DEFAULT_ACCOUNT, fetchBaseLists, getOrCreateSpreadsheet, getSheet, initClient } from './App';
 
   auth.subscribe(async (isSignedIn) => {
-    console.log(`isSignedIn ${isSignedIn !== null}`);
-
     spreadsheet.clear();
 
     if (isSignedIn) {
       const spreadsheetId = await getOrCreateSpreadsheet();
-      const [ accounts ] = await fetchBaseLists(spreadsheetId);
+      const { accounts } = await fetchBaseLists(spreadsheetId);
       const currentYear = new Date().getFullYear();
       const defaultAccount = !accounts || !accounts.length ? DEFAULT_ACCOUNT : accounts[0];
       const defaultSheet = `${currentYear}-${defaultAccount}`;
@@ -29,6 +27,8 @@
 
   spreadsheet.subscribe(async state => {
     if (!state.id || !state.sheet) {
+      sheet.clear();
+      options.clear();
       return;
     }
 

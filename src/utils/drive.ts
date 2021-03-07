@@ -1,4 +1,4 @@
-export const listSpreadsheets = async (spreadsheetName: string): Promise<string | null> => {
+export const listSpreadsheets = async (spreadsheetName: string): Promise<string | undefined> => {
   const response = await gapi.client.drive.files.list({
     q: `mimeType='application/vnd.google-apps.spreadsheet' and name contains '${spreadsheetName}'`,
     pageSize: 5,
@@ -9,12 +9,12 @@ export const listSpreadsheets = async (spreadsheetName: string): Promise<string 
 
   if (!files || !files.length) {
     console.warn(`File '${spreadsheetName}' not found`);
-    return null;
+    return undefined;
   }
 
   if (files.length > 1) {
     console.warn(`Found ${files.length} spreadsheets with name containing '${spreadsheetName}'`);
-    return null;
+    return undefined;
   }
 
   return files[0].id!!;

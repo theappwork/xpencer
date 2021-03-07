@@ -1,11 +1,12 @@
 import { auth } from './stores/auth';
-import { account, currency, category, kind } from './stores/data';
+import { options } from './stores/data';
 import { googleAPILoad } from './utils/google';
 import { listenAuthChanges } from './utils/auth';
 import { listSpreadsheets } from './utils/drive';
 import { createSpreadsheetSheet, createSpreadsheet, getSpreadsheetSheet, append } from './utils/sheets';
 import { fromSheetsToTransaction, list1DArray } from './utils/utilities';
 import { Input } from './model/spreadsheet';
+import { Options } from './model';
 
 // @ts-ignore
 export const SPREADSHEET_NAME: string = import.meta.env.SNOWPACK_PUBLIC_SPREADSHEET_NAME;
@@ -40,18 +41,22 @@ export const fetchBaseLists = async (spreadsheetId: string) => {
     list1DArray(spreadsheetId, BASE_SHEET_NAME, 'G2:G'),
   ]);
 
-  account.set(accounts!);
-  currency.set(currencies!);
-  category.set(categories!);
-  kind.set(kinds!);
+  const data: Options = {
+    accounts,
+    currencies,
+    categories,
+    kinds,
+  };
 
-  return [ accounts, currencies, categories, kinds ];
+  options.set(data);
+
+  return data;
 };
 
 export const getSheet = async (spreadsheetId: string, sheetName: string): Promise<Input[]> => {
   let sheet = await getSpreadsheetSheet(spreadsheetId, sheetName, 'A2:F');
 
-  if (sheet === null) {
+  if (!sheet) {
     sheet = await createSpreadsheetSheet(spreadsheetId, sheetName);
     const sheetHeader = SHEET_HEADER.split(',').map((header) => header.trim());
     await append(spreadsheetId, sheetName, [ sheetHeader ]);
@@ -65,10 +70,10 @@ export const initClient = async () => {
     await googleAPILoad();
 
     const currentUser = gapi.auth2.getAuthInstance().currentUser;
-    auth.setCurrentUser(currentUser ? currentUser.get().getBasicProfile() : null);
+    auth.setCurrentUser(currentUser ? currentUser.get().getBasicProfile() : undefined);
 
-    listenAuthChanges((_) => {
-      auth.setCurrentUser(currentUser ? currentUser.get().getBasicProfile() : null);
+    listenAuthChanges((isSignIn) => {
+      auth.setCurrentUser(isSignIn ? currentUser.get().getBasicProfile() : undefined);
     });
   } catch (e) {
     alert(`${initClient.name}: ${e.message}`);
