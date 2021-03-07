@@ -1,10 +1,10 @@
 [build]
   base = "/"
-  publish = "dist"
+  publish = "build"
   comand = "npm run clean && npm run build"
 
 [dev]
-  publish = "dist"
+  publish = "build"
   command = "npm run netlify"
   port = 9090
   targetPort = 8080
